@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.chase.game.Chase;
+import org.w3c.dom.Text;
 
 public class mainMenu implements Screen {
     final Chase game;
@@ -22,13 +23,6 @@ public class mainMenu implements Screen {
     Texture menuBackground;
 
     Texture menuBackground2;
-
-    Image startButton;
-
-    Image exitButton;
-
-    Image optionsButton;
-
     Label startLabel;
 
     Label optionsLabel;
@@ -43,6 +37,14 @@ public class mainMenu implements Screen {
 
     private double backGroundVelocity = 1.5;
 
+    public Label createLabel(BitmapFont font, Color col, String text) {
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+        style.fontColor = col;
+        Label name = new Label(text, style);
+        return name;
+    }
+
 	public mainMenu(final Chase game) {
         this.game = game;
 
@@ -50,41 +52,37 @@ public class mainMenu implements Screen {
 
         menuBackground2 = new Texture("background/city.png");
 
-        startButton = new Image(new Texture("frames/buttonorange.png"));
-
-        optionsButton = new Image(new Texture("frames/buttonorange.png"));
-
-        exitButton = new Image(new Texture("frames/buttonorange.png"));
-
         BitmapFont pixelFont = new BitmapFont(Gdx.files.internal("fonts/fdf.fnt"));
 
-        startLabel = new Label("Start Game", new Label.LabelStyle(pixelFont, Color.WHITE));
+        startLabel = createLabel(pixelFont, Color.WHITE, "Start Game");
 
-        startLabel.setAlignment(Align.center);
+        optionsLabel = createLabel(pixelFont, Color.WHITE, "Option Game");
 
-        optionsLabel = new Label("Options", new Label.LabelStyle(pixelFont, Color.WHITE));
+        exitLabel = createLabel(pixelFont, Color.WHITE, "Exit");
 
-        optionsLabel.setAlignment(Align.center);
-
-
-        exitLabel = new Label("Exit", new Label.LabelStyle(pixelFont, Color.WHITE));
-
-        exitLabel.setAlignment(Align.center);
+        
 
         backGroundTexture = new Texture(Gdx.files.internal("frames/menu_bg.png"));
-
 
         Drawable backgroundDrawable = new TextureRegionDrawable(backGroundTexture);
 
         stage = new Stage(new ScreenViewport());
 
         Table table = new Table();
-        table.setFillParent(true);
+
+        table.setSize(250f, 250f);
+
         table.setBackground(backgroundDrawable);
+
+        table.setPosition((Gdx.graphics.getWidth() - table.getWidth()) / 2, (Gdx.graphics.getHeight() - table.getHeight()) / 2);
+
         table.add(startLabel).padBottom(20).row();
+
         table.add(optionsLabel).padBottom(20).row();
+
         table.add(exitLabel).padBottom(20).row();
 
+        table.setName("tableActor");
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
@@ -93,6 +91,8 @@ public class mainMenu implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        Table table = stage.getRoot().findActor("tableActor");
+        table.setPosition((stage.getWidth() - table.getWidth()) / 2, (stage.getHeight() - table.getHeight()) / 2);
     }
 
 

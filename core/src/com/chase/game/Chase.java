@@ -2,10 +2,10 @@ package com.chase.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.chase.game.menu.mainMenu;
 
 
@@ -14,7 +14,9 @@ public class Chase extends Game {
 	private SpriteBatch batch;
 	private mainMenu menuScreen;
 
-	private BitmapFont font;
+	private Label createLabel;
+
+    private BitmapFont font;
 	public mainMenu getMenu() {
 		return menuScreen;
 	}
@@ -22,8 +24,6 @@ public class Chase extends Game {
 	public SpriteBatch getBatch() {
 		return batch; 
 	}
-
-
 	public void create() {
 		batch = new SpriteBatch();
 		menuScreen = new mainMenu(this);
